@@ -61,6 +61,7 @@ if "selected_section" in st.session_state:
     selected_data = restaurants[restaurants['name'].str.title() == selected_restaurant].iloc[0]
 
     st.subheader("Selected Restaurant")
+    st.image("restaurant.jpg", width=100)
     st.write(f"🍽️ **Restaurant Name:** {selected_data['name']}")
     st.write(f"📍 **Location:** {selected_data['location']}")
     st.write(f"⭐ **Rating:** {selected_data['rating']}")
@@ -76,6 +77,16 @@ if "selected_section" in st.session_state:
         if not indxs:
             st.error("❌ No similar restaurants found.")
         else:
-            recommended_names = restaurants.loc[indxs, 'name'].str.title().tolist()
-            for name in recommended_names:
-                st.write(f"{name}")
+            for i in indxs:
+                    recommended_restaurant = restaurants.iloc[i]
+                    
+                    with st.container():
+                        col1, col2 = st.columns([1, 3])
+                        with col1:
+                            st.image("restaurant.jpg", width=100)
+                        with col2:
+                            st.write(f"### 🍽️ {recommended_restaurant['name']}")
+                            st.write(f"📍 **Location:** {recommended_restaurant['location']}")
+                            st.write(f"⭐ **Rating:** {recommended_restaurant['rating']}")
+                            st.write(f"💰 **Price Range:** ${recommended_restaurant['price_range']}")
+                            st.markdown("---")
